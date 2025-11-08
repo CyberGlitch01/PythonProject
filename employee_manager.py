@@ -1,11 +1,6 @@
 import pandas as pd
-import os
 
 file = "employees.csv"
-
-if not os.path.exists(file):
-    df = pd.DataFrame(columns=["EmpID", "Name", "Department", "Designation", "Salary", "Age", "Experience"])
-    df.to_csv(file, index=False)
 
 print("========== EMPLOYEE MANAGER ==========")
 
@@ -16,11 +11,9 @@ while True:
     print("3. Search Employee by ID")
     print("4. Update Employee Salary")
     print("5. Delete Employee")
-    print("6. Show Data Analysis")
-    print("7. Open Graphical Analysis")
-    print("8. Exit")
+    print("6. Exit")
 
-    choice = input("\nEnter your choice (1-8): ")
+    choice = input("\nEnter your choice (1-6): ")
 
     df = pd.read_csv(file)
 
@@ -28,15 +21,14 @@ while True:
         print("\n=== Add Employee ===")
         empid = input("Enter Employee ID: ")
 
-        if not empid in df["EmpID"].values:
+        if empid not in df["EmpID"].values:
             name = input("Enter Name: ")
             dept = input("Enter Department: ")
             desig = input("Enter Designation: ")
             salary = float(input("Enter Salary: "))
             age = int(input("Enter Age: "))
             exp = int(input("Enter Experience (in years): "))
-            next_index = len(df)
-            df.loc[next_index] = [empid, name, dept, desig, salary, age, exp]
+            df.loc[len(df)] = [empid, name, dept, desig, salary, age, exp]
             df.to_csv(file, index=False)
             print("Employee added successfully!")
             print("\nRecently Added Record:")
@@ -60,7 +52,6 @@ while True:
     elif choice == '4':
         print("\n=== Update Employee Salary ===")
         empid = input("Enter Employee ID: ")
-
         if empid in df['EmpID'].values:
             new_salary = float(input("Enter new salary: "))
             index = df[df['EmpID'] == empid].index[0]
@@ -73,7 +64,6 @@ while True:
     elif choice == '5':
         print("\n=== Delete Employee ===")
         empid = input("Enter Employee ID to delete: ")
-
         if empid in df['EmpID'].values:
             index_to_drop = df[df['EmpID'] == empid].index
             df = df.drop(index_to_drop)
@@ -83,22 +73,7 @@ while True:
             print("Employee not found!")
 
     elif choice == '6':
-        print("\n=== Data Analysis ===")
-        print("Total Employees:", len(df))
-        print("Average Salary:", df['Salary'].mean())
-        print("Highest Salary:", df['Salary'].max())
-        print("Lowest Salary:", df['Salary'].min())
-        print("\nDepartment-wise Employee Count:")
-        print(df['Department'].value_counts())
-        print("\nAverage Salary by Department:")
-        print(df.groupby('Department')['Salary'].mean())
-
-    elif choice == '7':
-        print("\nOpening Graphical Analysis...")
-        os.system("python analysis.py")
-
-    elif choice == '8':
-        print("Exiting program... Goodbye!")
+        print("Exiting program...")
         break
 
     else:

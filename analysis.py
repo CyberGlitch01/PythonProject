@@ -1,91 +1,93 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import os
 
 file = "employees.csv"
-
-if not os.path.exists(file):
-    df = pd.DataFrame(columns=[
-        "EmpID", "Name", "Department", "Designation",
-        "Salary", "Age", "Experience"
-    ])
-    df.to_csv(file, index=False)
-
 df = pd.read_csv(file)
 
-while True:
-    print("\n========== GRAPHICAL EMPLOYEE ANALYSIS ==========")
-    print("1. Department-wise Employee Count (Bar Graph)")
-    print("2. Average Salary by Department (Bar Graph)")
-    print("3. Salary vs Experience (Bar Graph)")
-    print("4. Department-wise Employee Percentage (Pie Chart)")
-    print("5. Exit")
-    print("6. Total Salary Expenditure by Department (Bar Graph)")
-    print("8. Salary to Experience Ratio (Line Chart)")
-    print("9. Salary vs Age (Bar Graph)")
+print("""
+Choose an analysis option:
+1. Salary vs Age
+2. Salary Distribution (Histogram)
+3. Age Distribution
+4. Experience Distribution
+5. Employees with Salary > 55000
+6. IT Department: Experience vs Salary
+7. Employees per Department
+8. Experience vs Salary
+""")
 
-    plt.clf()
-    choice = input("\nEnter your choice (1-9): ")
+choice = int(input("Enter your choice (1-8): "))
 
-    if choice == '1':
-        dept_count = df['Department'].value_counts()
-        dept_count.plot(kind='bar', color='skyblue', edgecolor='black')
-        plt.title('Department-wise Employee Count')
-        plt.xlabel('Department')
-        plt.ylabel('Number of Employees')
-        plt.show()
+if choice == 1:
+    plt.bar(df['Age'], df['Salary'], color='purple')
+    plt.title('Salary vs Age')
+    plt.xlabel('Age')
+    plt.ylabel('Salary')
+    plt.grid(True)
+    plt.show()
 
-    elif choice == '2':
-        avg_salary = df.groupby('Department')['Salary'].mean()
-        avg_salary.plot(kind='bar', color='lightgreen', edgecolor='black')
-        plt.title('Average Salary by Department')
-        plt.xlabel('Department')
-        plt.ylabel('Average Salary')
-        plt.show()
+elif choice == 2:
+    plt.hist(df["Salary"], bins=8, color="skyblue", edgecolor="black")
+    plt.title("Salary Distribution of Employees")
+    plt.xlabel("Salary")
+    plt.ylabel("Number of Employees")
+    plt.show()
 
-    elif choice == '3':
-        df.plot(kind='bar', x='Experience', y='Salary', color='lightblue', edgecolor='black')
-        plt.title('Salary by Experience')
-        plt.xlabel('Experience (Years)')
-        plt.ylabel('Salary')
-        plt.show()
+elif choice == 3:
+    plt.hist(df["Age"], bins=6)
+    plt.title("Age Distribution")
+    plt.xlabel("Age")
+    plt.ylabel("Count")
+    plt.show()
 
-    elif choice == '4':
-        dept_count = df['Department'].value_counts()
-        dept_count.plot(kind='pie', autopct='%1.1f%%', startangle=90, shadow=True)
-        plt.title('Department-wise Employee Percentage')
-        plt.ylabel('')
-        plt.show()
+elif choice == 4:
+    plt.hist(df["Experience"], bins=7)
+    plt.title("Experience Distribution")
+    plt.xlabel("Years of Experience")
+    plt.ylabel("Count")
+    plt.show()
 
-    elif choice == '5':
-        print("Exiting program...")
-        break
+elif choice == 5:
+    high = df[df["Salary"] > 55000]
+    plt.bar(high["Name"], high["Salary"])
+    plt.title("Employees with Salary > 55000")
+    plt.xticks(rotation=45)
+    plt.ylabel("Salary")
+    plt.show()
 
-    elif choice == '6':
-        total_salary = df.groupby('Department')['Salary'].sum()
-        total_salary.plot(kind='bar', color='orange', edgecolor='black')
-        plt.title('Total Salary Expenditure by Department')
-        plt.xlabel('Department')
-        plt.ylabel('Total Salary')
-        plt.tight_layout()
-        plt.show()
+elif choice == 6:
+    it = df[df["Department"] == "IT"]
+    plt.bar(it["Experience"], it["Salary"])
+    plt.title("IT Department: Experience vs Salary")
+    plt.xlabel("Experience (Years)")
+    plt.ylabel("Salary")
+    plt.show()
 
-    elif choice == '8':
-        ratio_df = df.groupby('Experience')['Salary'].mean()
-        plt.plot(ratio_df.index, ratio_df.values, marker='o', linestyle='-', color='purple')
-        plt.title('Salary to Experience Ratio')
-        plt.xlabel('Experience (Years)')
-        plt.ylabel('Average Salary')
-        plt.grid(True)
-        plt.tight_layout()
-        plt.show()
+elif choice == 7:
+    departments = df["Department"].values
+    names = []
+    counts = []
+    for i in range(len(departments)):
+        d = departments[i]
+        if d not in names:
+            names.append(d)
+            c = len(df[df["Department"] == d])
+            counts.append(c)
 
-    elif choice == '9':
-        df.plot(kind='bar', x='Age', y='Salary', color='salmon', edgecolor='black')
-        plt.title('Salary by Age')
-        plt.xlabel('Age')
-        plt.ylabel('Salary')
-        plt.show()
+    plt.bar(names, counts)
+    plt.title("Employees per Department")
+    plt.xlabel("Department")
+    plt.ylabel("Count")
+    plt.show()
 
-    else:
-        print("Invalid choice! Please enter a valid option (1-9).")
+elif choice == 8:
+    x = df["Experience"].values
+    y = df["Salary"].values
+    plt.bar(x, y)
+    plt.title("Experience vs Salary")
+    plt.xlabel("Experience (Years)")
+    plt.ylabel("Salary")
+    plt.show()
+
+else:
+    print("Invalid choice!")
