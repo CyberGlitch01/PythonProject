@@ -1,0 +1,21 @@
+EmpID,Name,Department,Designation,Salary,Age,Experience
+E101,Raj Kumar,IT,Software Engineer,52000.0,29,5
+E102,Ankush Sharma,HR,HR Manager,48000.0,32,8
+E103,Aman Patel,Finance,Accountant,46000.0,27,3
+E104,Simran Kaur,IT,Web Developer,50000.0,26,4
+E105,Ankit Yadav,Sales,Sales Executive,42000.0,30,6
+E106,Meera Nair,Finance,Financial Analyst,55000.0,33,10
+E107,Karan Mehta,HR,Recruiter,45000.0,25,2
+E108,Neha Verma,Sales,Marketing Lead,53000.0,31,7
+E109,Rohit Das,IT,App Developer,58000.0,28,5
+E110,Priya Jain,Finance,Data Analyst,60000.0,35,12
+E111,Vivek Singh,IT,System Administrator,54000.0,30,6
+E112,Shweta Rao,HR,HR Executive,42000.0,24,2
+E113,Harsh Gupta,Sales,Sales Manager,62000.0,36,11
+E114,Pooja Bansal,Finance,Auditor,57000.0,32,8
+E115,Ritika Joshi,IT,UI/UX Designer,51000.0,27,4
+E116,Saurabh Malhotra,Sales,Field Executive,40000.0,25,3
+E117,Deepika Sen,Finance,Investment Advisor,65000.0,38,13
+E118,Nikhil Arora,IT,Backend Developer,59000.0,29,6
+E119,Ananya Dutta,HR,Training Specialist,48000.0,28,5
+E120,Arjun Mishra,Sales,Customer Relationship Manager,61000.0,34,10
